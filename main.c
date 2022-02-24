@@ -6,7 +6,7 @@
 /*   By: jrasser <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 14:33:55 by jrasser           #+#    #+#             */
-/*   Updated: 2022/02/24 16:40:21 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/02/24 18:42:27 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,24 @@ int	main(void)
 	printf("ft_isascii : %d\n\n", ft_isascii(test));
 	
 	printf("isprint : %d\n", isprint(test));
-	printf("ft_isprint : %d\n\n", ft_isprint(test));
+	printf("ft_isprint : %d\n", ft_isprint(test));
 	
-	printf("strlen : %lu\n", strlen(str));
-	printf("ft_strlen : %lu\n\n", ft_strlen(str));
+	// *************  strlen ***************
+    printf("\n\n**************** strlen *************\n");
+	
+	printf("%lu\n", ft_strlen("Bien le bonjour"));
+	printf("%lu\n",    strlen("Bien le bonjour"));
 
+	printf("%lu\n", ft_strlen(""));
+	printf("%lu\n",    strlen(""));
+
+	printf("%lu\n", ft_strlen("1"));
+	printf("%lu\n",    strlen("1"));
 
 
 	// *************  memset ***************
-
+    printf("\n\n**************** memset *************\n");
+	
 	char array[] = "Bonjour";
 	char array_real[] = "Bonjour";
     size_t size = sizeof(char) * 4;
@@ -53,42 +62,57 @@ int	main(void)
 
 	length = 7;
 	i = 0;
-    //Display the initial values 
+    /*Display the initial values 
     printf("memset :      ");
 	while (i < length)
 	{
         printf( "%c", array_real[i]);
 		i++;
-	}
+	}*/
 
-    //Reset the memory bloc 
-    memset(array_real, 112, size);
     ft_memset(array, 112, size);
+    memset(array_real, 112, size);
+    printf( "%s\n", array);
+    printf( "%s\n", array_real);
+	
+	ft_memset(array, 150, size);
+    memset(array_real, 150, size);
+	printf( "%s\n", array);
+    printf( "%s\n", array_real);
 
-    //Display the new values
+	ft_memset(array, 50, sizeof(char) * 7);
+    memset(array_real, 50, sizeof(char) * 7);
+    printf( "%s\n", array);
+    printf( "%s\n", array_real);
+
+
+	int array43[] = {0,1,2,3,4,5,6,7,8,9};
+	int array_real43[] = {0,1,2,3,4,5,6,7,8,9};
+    size = sizeof(int) * 10;
+	
+	ft_memset(array43, 1, size);
+    memset(array_real43, 1, size);
+	//Display the new values
+	i = 0;
+	printf("\nretour mine : ");
+	while (i < 10)
+	{
+        printf( "%d ", array_real43[i]);
+		i++;
+	}
 	i = 0;
     printf("\nretour real : ");
-	while (i < length)
+	while (i < 10)
 	{
-        printf( "%c", array_real[i]);
+        printf( "%d ", array43[i]);
 		i++;
 	}   
-	printf("\nretour mine : ");
-	i = 0;
-	while (i < length)
-	{
-        printf( "%c", array[i]);
-		i++;
-	}
-    printf("\n\n");
-
-
-
 
 
 
 	// *************  bzero  ***************
-
+    printf("\n\n**************** bzero *************\n");
+	
 	int array2_real[] = {1, 12, 13, 33, 42};
 	int array2[] = {1, 12, 13, 33, 42};
     int length2;
@@ -130,8 +154,9 @@ int	main(void)
 
 
 	// *************  memcpy  *************** 
-
-    printf("memcpy :      ");
+    printf("\n\n**************** memcpy *************\n");
+    
+	printf("memcpy :      ");
 	int 	array3_real[] = {1, 12, 13, 33, 42};
 	int		dest_real[5];
 	int 	array3[] = {1, 12, 13, 33, 42};
@@ -425,18 +450,24 @@ int	main(void)
     printf("%s\n", ft_strchr("Un message ici assez long", 'e'));
     printf("%s\n",    strchr("Un message ici assez long", 'e'));
 
-    printf("%s\n", ft_strchr("Un message ici assez long", 'b'));
+    printf("%s\n", ft_strchr("Un message ici assez long", '\0'));
+    printf("%s\n",    strchr("Un message ici assez long", '\0'));
+
+	printf("%s\n", ft_strchr("Un message ici assez long", 'b'));
     printf("%s\n",    strchr("Un message ici assez long", 'b'));
+  
+  
 
-
-
-    // ****************  strrchr  *****************
+	// ****************  strrchr  *****************
     printf("\n\n**************** strrchr *************\n");
 
     printf("%s\n", ft_strrchr("Un message ici assez long", 'e'));
     printf("%s\n",    strrchr("Un message ici assez long", 'e'));
 
-    printf("%s\n", ft_strrchr("Un message ici assez long", 'b'));
+	printf("%s\n", ft_strchr("Un message ici assez long", '\0'));
+    printf("%s\n",    strchr("Un message ici assez long", '\0'));
+
+	printf("%s\n", ft_strrchr("Un message ici assez long", 'b'));
     printf("%s\n",    strrchr("Un message ici assez long", 'b'));
 
 
@@ -506,14 +537,15 @@ int	main(void)
     char    *str_strnstr_little;
     size_t    len;
 
-    len = 10;
+    len = 5;
     str_strnstr_big = "Un gros message ici parparce que j'ai aucune inspi";
     str_strnstr_little = "parce que j'ai";
 
-    printf("%s\n", ft_strnstr(str_strnstr_big, str_strnstr_little, len));
-    printf("%s\n", strnstr(str_strnstr_big, str_strnstr_little, len));
+    printf("%s\n", ft_strnstr(str_strnstr_big, str_strnstr_little, 0));
+    printf("%s\n",    strnstr(str_strnstr_big, str_strnstr_little, 0));
 
-
+    printf("%s\n", ft_strnstr(str_strnstr_big, "", len));
+    printf("%s\n",    strnstr(str_strnstr_big, "", len));
 
     // ****************  atoi  *****************
     printf("\n\n**************** atoi *************\n");
@@ -532,45 +564,21 @@ int	main(void)
     // ****************  calloc  *****************
     printf("\n\n**************** calloc *************\n");
 
-    printf("%p\n", ft_calloc(10, sizeof(char)));
-    printf("%p\n",    calloc(10, sizeof(char)));
+    printf("%s\n", ft_calloc(10, sizeof(char)));
+    printf("%s\n",    calloc(10, sizeof(char)));
 
 
-/*
+
+    // ****************  strdup  *****************
+    printf("\n\n**************** strdup *************\n");
 	
-	printf("strlcpy : %lu\n", strlcpy(str));
-	printf("ft_strlcpy : %lu\n", ft_strlcpy(str));
-	
-	printf("strlcat : %lu\n", strlcat(str));
-	printf("ft_strlcat : %lu\n", ft_strlcat(str));
-	
-	printf("toupper : %lu\n", toupper(str));
-	printf("ft_toupper : %lu\n", ft_toupper(str));
-	
-	printf("tolower : %lu\n", tolower(str));
-	printf("ft_tolower : %lu\n", ft_tolower(str));
-	
-	printf("strchr : %lu\n", strchr(str));
-	printf("ft_strchr : %lu\n", ft_strchr(str));
-	
-	printf("strrchr : %lu\n", strrchr(str));
-	printf("ft_strrchr : %lu\n", ft_strrchr(str));
-	
-	printf("strncmp : %lu\n", strncmp(str));
-	printf("ft_strncmp : %lu\n", ft_strncmp(str));
-	
-	printf("memchr : %lu\n", memchr(str));
-	printf("ft_memchr : %lu\n", ft_memchr(str));
-	
-	printf("memcmp: %lu\n", memcmp(str));
-	printf("ft_memcmp : %lu\n", ft_memcmp(str));
-	
-	printf("strnstr : %lu\n", strnstr(str));
-	printf("ft_strnstr : %lu\n", ft_strnstr(str));
-	
-	printf("atoi : %lu\n", atoi(str));
-	printf("ft_atoi : %lu\n", ft_atoi(str));
-*/
+
+	printf("%s\n", ft_strdup("Bonjour a tous"));
+	printf("%s\n",    strdup("Bonjour a tous"));
+
+	printf("%s\n", ft_strdup(""));
+	printf("%s\n",    strdup(""));
+
 
 
 	return (0);

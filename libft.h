@@ -6,12 +6,14 @@
 /*   By: jrasser <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 15:22:00 by jrasser           #+#    #+#             */
-/*   Updated: 2022/02/24 16:48:59 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/02/24 17:49:02 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __LIBFT_H__
 # define __LIBFT_H__
+
+#include <stdlib.h>
 
 typedef unsigned long size_t;
 
@@ -40,6 +42,6 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 int		ft_atoi(const char *str);
 
 void	*ft_calloc(size_t count, size_t size);
-char	*strdup(const char *s1);
+char	*ft_strdup(const char *s1);
 
 #endif

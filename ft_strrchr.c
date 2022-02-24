@@ -12,5 +12,8 @@ char	*ft_strrchr(const char *s, int c)
 		}
 		i++;
 	}
+	if (s[i] == c){
+		ret = ((char *)s + i);
+	}
 	return (ret);
 }
