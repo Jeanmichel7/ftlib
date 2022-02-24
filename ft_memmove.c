@@ -1,18 +1,13 @@
-typedef unsigned long size_t;
+#include <stdio.h>
 
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
 	size_t	i;
-	char	temp;
+	char	*temp;
 
-	i = 0;
-	while (len)
-	{
-		//printf("src[%d] : %d - dst[%d] : %d \n", i, *((int *)src + i), i, *((int *)dst + i));
-		temp = *((char *)src + i);
-		*((char *)dst + i) = temp;
-		i++;
-		len--;
-	}
+	temp = (char *)src;
+	i = -1;
+	while (++i < len)
+		*((char *)dst + i) = temp[i];
 	return (dst);
 }

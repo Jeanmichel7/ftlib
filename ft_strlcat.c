@@ -4,18 +4,22 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
 	size_t i;
 	size_t j;
+	size_t res;
 
+	if (dstsize < ft_strlen(dst))
+		res = ft_strlen(src) + dstsize;
+	else
+		res = ft_strlen(src) + ft_strlen(dst);
 	i = 0;
 	while (dst[i])
 		i++;
 	j = 0;
-	while (j < dstsize) 
+	while (i + 1 < dstsize) 
 	{	
-		//printf("%lld dst[%d] : %c -  src[%d] : %c \n", size, i, dst[i], j, src[j]);
 		dst[i] = src[j];
 		i++;
 		j++;
 	}
 	dst[i] = '\0';
-	return (i);
+	return (res);
 }

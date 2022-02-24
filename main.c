@@ -6,7 +6,7 @@
 /*   By: jrasser <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 14:33:55 by jrasser           #+#    #+#             */
-/*   Updated: 2022/02/24 18:42:27 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/02/24 23:10:06 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ int	main(void)
 	
 	printf("isprint : %d\n", isprint(test));
 	printf("ft_isprint : %d\n", ft_isprint(test));
-	
+
+
+
 	// *************  strlen ***************
     printf("\n\n**************** strlen *************\n");
 	
@@ -49,6 +51,7 @@ int	main(void)
 
 	printf("%lu\n", ft_strlen("1"));
 	printf("%lu\n",    strlen("1"));
+
 
 
 	// *************  memset ***************
@@ -175,7 +178,7 @@ int	main(void)
         printf( "%d ", array3[i] );
 		i++;
 	}
-
+    printf( "\n=> i3");
     //Reset the memory bloc 
     p_real = memcpy(dest_real, array3_real, size);
     p = ft_memcpy(dest, array3, size);
@@ -196,6 +199,31 @@ int	main(void)
 		i++;
 	}
 	printf("%p \n\n", &p);
+
+
+
+
+    printf( "\n=> i5");
+    //Reset the memory bloc 
+    p_real = memcpy(dest_real, array3_real, sizeof(int) * 5);
+    p = ft_memcpy(dest, array3, sizeof(int) * 5);
+    //Display the new values
+	i = 0;
+    printf("\nretour real : ");
+	while (i < length3)
+	{
+        printf( "%d ", *(char*)(dest_real + i));
+		i++;
+	}
+	printf("%p \nretour mine : ", &p_real);
+	i = 0;
+	while (i < length3)
+	{
+        printf( "%d ", *(char*)(dest + i));
+		i++;
+	}
+	printf("%p \n\n", &p);
+
 
 
 
@@ -276,6 +304,7 @@ int	main(void)
     dst_mememove[8] = 'e';
     dst_mememove[9] = 'r';
     dst_mememove[10] = 'e';
+    dst_mememove[11] = '!';
     printf("dest : %s %p\n", dst_mememove, &dst_mememove);
     
     printf("%s\n", ft_memmove(dst_mememove, src_mememove, 0));
@@ -287,7 +316,7 @@ int	main(void)
 
 
     // **************** mememove tab int ****************
-    int decalage = 3;
+    int decalage = 6;
     printf("\n\n*************** mememove_int **********\ndecalage : %d\n", decalage);
 
 
@@ -372,35 +401,41 @@ int	main(void)
     // ****************  strlcpy  *****************
     printf("\n\n**************** strlcpy *************\n");
     char            dest_strlcpy[100];
+    char            dest_strlcpy_real[100];
 
-    printf("res : %zu, %s\n", ft_strlcpy(dest_strlcpy, "Message numero 1", 100), dest);
-    printf("res : %zu, %s\n",    strlcpy(dest_strlcpy, "Message numero 1", 10), dest);
+    printf("res : %zu, %s\n", ft_strlcpy(dest_strlcpy, "Message numero 1", 10), dest_strlcpy);
+    printf("res : %zu, %s\n",    strlcpy(dest_strlcpy_real, "Message numero 1", 10), dest_strlcpy_real);
 
-    printf("res : %zu, %s\n", ft_strlcpy(dest_strlcpy, "Message numero 1", 1), dest);
-    printf("res : %zu, %s\n",    strlcpy(dest_strlcpy, "Message numero 1", 1), dest);
+    printf("res : %zu, %s\n", ft_strlcpy(dest_strlcpy, "Message numero 1", 1), dest_strlcpy);
+    printf("res : %zu, %s\n",    strlcpy(dest_strlcpy_real, "Message numero 1", 1), dest_strlcpy_real);
 
-    printf("res : %zu, %s\n", ft_strlcpy(dest_strlcpy, "haaa", 30), dest);
-    printf("res : %zu, %s\n",    strlcpy(dest_strlcpy, "Message numero 1", 1), dest);
+    printf("res : %zu, %s\n", ft_strlcpy(dest_strlcpy, "haaa", 30), dest_strlcpy);
+    printf("res : %zu, %s\n",    strlcpy(dest_strlcpy_real, "haaa", 30), dest_strlcpy_real);
 
 
 
     // ****************  strlcat  *****************
     printf("\n\n**************** strlcat *************\n");
-    char    dest_cat_mine[200] = "Debut du message";
+    char    dest_cat_mine[200] = "Debut du message"; //16
     char    dest_cat_real[200] = "Debut du message";
 
-    printf("dest : %zu, %s\n", ft_strlcat(dest_cat_mine, " ,fin du message", 10), dest_cat_mine);
-    printf("dest : %zu, %s\n",  strlcat(dest_cat_real, " ,fin du message", 10), dest_cat_real);
+    printf("dest : %zu, %s\n", ft_strlcat(dest_cat_mine, " ,fin du message", 20), dest_cat_mine);
+    printf("dest : %zu, %s\n",    strlcat(dest_cat_real, " ,fin du message", 20), dest_cat_real);
     
     dest_cat_mine[16] = '\0';
     dest_cat_real[16] = '\0';
-    printf("dest : %zu, %s\n", ft_strlcat(dest_cat_mine, " ,fin du message", 5), dest_cat_mine);
-    printf("dest : %zu, %s\n",  strlcat(dest_cat_real, " ,fin du message", 5), dest_cat_real);
+    printf("dest : %zu, %s\n", ft_strlcat(dest_cat_mine, " ,fin du message", 30), dest_cat_mine);
+    printf("dest : %zu, %s\n",    strlcat(dest_cat_real, " ,fin du message", 30), dest_cat_real);
     
     dest_cat_mine[16] = '\0';
     dest_cat_real[16] = '\0';
-    printf("dest : %zu, %s\n", ft_strlcat(dest_cat_mine, "", 10), dest_cat_mine);
-    printf("dest : %zu, %s\n",  strlcat(dest_cat_real, "", 10), dest_cat_real);
+    printf("dest : %zu, %s\n", ft_strlcat(dest_cat_mine, "bla", 10), dest_cat_mine);
+    printf("dest : %zu, %s\n",    strlcat(dest_cat_real, "bla", 10), dest_cat_real);
+
+    dest_cat_mine[16] = '\0';
+    dest_cat_real[16] = '\0';
+    printf("dest : %zu, %s\n", ft_strlcat(dest_cat_mine, "ibla", 0), dest_cat_mine);
+    printf("dest : %zu, %s\n",    strlcat(dest_cat_real, "ibla", 0), dest_cat_real);
 
 
 
@@ -511,6 +546,7 @@ int	main(void)
     printf("res : %s\n",    memchr(str_memchr, 1236, 0));
 
 
+
     // ****************  memcmp  *****************
     printf("\n\n**************** memcmp *************\n");
     char *str_memcmp1;
@@ -527,25 +563,46 @@ int	main(void)
     printf("res : %d\n", ft_memcmp(str_memcmp1, "", 0));
     printf("res : %d\n",    memcmp(str_memcmp1, "", 0));
 
-    printf("res : %d\n", ft_memcmp("", str_memcmp2, 1)); // -1
-    printf("res : %d\n",    memcmp("", str_memcmp2, 1)); // -77
+    printf("res : %d\n", ft_memcmp("", str_memcmp2, 1));
+    printf("res : %d\n",    memcmp("", str_memcmp2, 1));
+
+    printf("res : %d\n", ft_memcmp("i", "j", 1));
+    printf("res : %d\n",    memcmp("i", "j", 1));
+
+    printf("res : %d\n", ft_memcmp("j", "i", 10));
+    printf("res : %d\n",    memcmp("j", "i", 10));
 
 
-    // ****************  strnstr  *****************
+
+	// ****************  strnstr  *****************
     printf("\n\n**************** strnstr *************\n");
     char    *str_strnstr_big;
     char    *str_strnstr_little;
     size_t    len;
 
-    len = 5;
+    len = 14;
     str_strnstr_big = "Un gros message ici parparce que j'ai aucune inspi";
     str_strnstr_little = "parce que j'ai";
 
-    printf("%s\n", ft_strnstr(str_strnstr_big, str_strnstr_little, 0));
+    printf("%s\n", ft_strnstr(str_strnstr_big, str_strnstr_little, 36));
+    printf("%s\n",    strnstr(str_strnstr_big, str_strnstr_little, 36));
+
+	printf("%s\n", ft_strnstr(str_strnstr_big, str_strnstr_little, 37));
+    printf("%s\n",    strnstr(str_strnstr_big, str_strnstr_little, 37));
+
+	printf("%s\n", ft_strnstr(str_strnstr_big, str_strnstr_little, 0));
     printf("%s\n",    strnstr(str_strnstr_big, str_strnstr_little, 0));
 
-    printf("%s\n", ft_strnstr(str_strnstr_big, "", len));
+	printf("%s\n", ft_strnstr(str_strnstr_big, "", len));
     printf("%s\n",    strnstr(str_strnstr_big, "", len));
+
+	printf("%s\n", ft_strnstr( "", "a", len));
+    printf("%s\n",    strnstr( "", "a", len));
+
+	printf("%s\n", ft_strnstr(str_strnstr_big, str_strnstr_little, 1023));
+    printf("%s\n",    strnstr(str_strnstr_big, str_strnstr_little, 1023));
+
+
 
     // ****************  atoi  *****************
     printf("\n\n**************** atoi *************\n");
@@ -556,23 +613,52 @@ int	main(void)
     printf("%d\n", ft_atoi("+456a1 2"));
     printf("%d\n",    atoi("+456a1 2"));
 
-    printf("%d\n", ft_atoi("-00  "));
-    printf("%d\n",    atoi("-00  "));
+    printf("%d\n", ft_atoi("-001  "));
+    printf("%d\n",    atoi("-001  "));
+
+	printf("%d\n", ft_atoi("   -2147483648"));
+    printf("%d\n",    atoi("   -2147483648"));
+
+	printf("%d\n", ft_atoi("2147483647"));
+    printf("%d\n",    atoi("2147483647"));
+
+	printf("%d\n", ft_atoi("-abc123"));
+    printf("%d\n",    atoi("-abc123"));
+
+	printf("%d\n", ft_atoi("-0"));
+    printf("%d\n",    atoi("-0"));
 
 
 
     // ****************  calloc  *****************
     printf("\n\n**************** calloc *************\n");
 
-    printf("%s\n", ft_calloc(10, sizeof(char)));
-    printf("%s\n",    calloc(10, sizeof(char)));
+	int len_calloc = 10;
+	char	*str_calloc      = ft_calloc(len_calloc, sizeof(char));
+	char	*str_calloc_real =    calloc(len_calloc, sizeof(char));
+    printf("%d\n", ft_strlen(str_calloc));
+    printf("%d\n", ft_strlen(str_calloc_real));
+
+	i = 0;
+	while (i < len_calloc)
+	{
+		printf("%d", *(str_calloc_real + i));
+		i++;
+	}
+	printf("\n");
+	i = 0;
+	while (i < len_calloc)
+	{
+		printf("%d", *(str_calloc_real + i));
+		i++;
+	}
+
 
 
 
     // ****************  strdup  *****************
     printf("\n\n**************** strdup *************\n");
 	
-
 	printf("%s\n", ft_strdup("Bonjour a tous"));
 	printf("%s\n",    strdup("Bonjour a tous"));
 
