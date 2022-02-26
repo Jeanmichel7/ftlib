@@ -16,12 +16,16 @@
 #include <string.h>
 #include <stdlib.h>
 
+//memcmp a tester en cour
+#include "libbsd/src/strlcpy.c"
+#include "libbsd/src/strlcat.c"
+#include "libbsd/src/strnstr.c"
+
+
 int	main(void)
 {
 	char 	test;
-	char	*str;
 	test = '5';
-	str = "Bien le bonjour";
 
 	printf("isalpha : %d\n", isalpha(123));
 	printf("ft_isalpha : %d\n\n", ft_isalpha(123));
@@ -60,10 +64,8 @@ int	main(void)
 	char array[] = "Bonjour";
 	char array_real[] = "Bonjour";
     size_t size = sizeof(char) * 4;
-	int length;
 	int i;
 
-	length = 7;
 	i = 0;
     /*Display the initial values 
     printf("memset :      ");
@@ -412,6 +414,9 @@ int	main(void)
     printf("res : %zu, %s\n", ft_strlcpy(dest_strlcpy, "haaa", 30), dest_strlcpy);
     printf("res : %zu, %s\n",    strlcpy(dest_strlcpy_real, "haaa", 30), dest_strlcpy_real);
 
+    printf("res : %zu, %s\n", ft_strlcpy(dest_strlcpy, "haaa", 2), dest_strlcpy);
+    printf("res : %zu, %s\n",    strlcpy(dest_strlcpy_real, "haaa", 2), dest_strlcpy_real);
+
 
 
     // ****************  strlcat  *****************
@@ -424,8 +429,8 @@ int	main(void)
     
     dest_cat_mine[16] = '\0';
     dest_cat_real[16] = '\0';
-    printf("dest : %zu, %s\n", ft_strlcat(dest_cat_mine, " ,fin du message", 30), dest_cat_mine);
-    printf("dest : %zu, %s\n",    strlcat(dest_cat_real, " ,fin du message", 30), dest_cat_real);
+    printf("dest : %zu, %s\n", ft_strlcat(dest_cat_mine, " ,fin du message", 35), dest_cat_mine);
+    printf("dest : %zu, %s\n",    strlcat(dest_cat_real, " ,fin du message", 35), dest_cat_real);
     
     dest_cat_mine[16] = '\0';
     dest_cat_real[16] = '\0';
@@ -554,8 +559,11 @@ int	main(void)
 
     str_memcmp1 = "Message";
     str_memcmp2 = "MesSage";
-    printf("res : %d\n", ft_memcmp(str_memcmp1, str_memcmp2, 14));
-    printf("res : %d\n",    memcmp(str_memcmp1, str_memcmp2, 14));
+    printf("res : %d\n", ft_memcmp(str_memcmp1, str_memcmp2, 11));
+    printf("res : %d\n",    memcmp(str_memcmp1, str_memcmp2, 11));
+
+    printf("res : %d\n", ft_memcmp(str_memcmp1, str_memcmp2, 7));
+    printf("res : %d\n",    memcmp(str_memcmp1, str_memcmp2, 7));
 
     printf("res : %d\n", ft_memcmp(str_memcmp1, str_memcmp2, 2));
     printf("res : %d\n",    memcmp(str_memcmp1, str_memcmp2, 2));
@@ -566,8 +574,11 @@ int	main(void)
     printf("res : %d\n", ft_memcmp("", str_memcmp2, 1));
     printf("res : %d\n",    memcmp("", str_memcmp2, 1));
 
-    printf("res : %d\n", ft_memcmp("i", "j", 1));
-    printf("res : %d\n",    memcmp("i", "j", 1));
+    printf("res : %d\n", ft_memcmp(str_memcmp2, "", 1));
+    printf("res : %d\n",    memcmp(str_memcmp2, "", 1));
+
+    printf("res : %d\n", ft_memcmp("ijbsq", "j", 3));
+    printf("res : %d\n",    memcmp("ijbsq", "j", 3));
 
     printf("res : %d\n", ft_memcmp("j", "i", 10));
     printf("res : %d\n",    memcmp("j", "i", 10));
@@ -652,7 +663,7 @@ int	main(void)
 		printf("%d", *(str_calloc_real + i));
 		i++;
 	}
-
+	printf("\n");
 
 
 
@@ -664,6 +675,144 @@ int	main(void)
 
 	printf("%s\n", ft_strdup(""));
 	printf("%s\n",    strdup(""));
+
+	printf("%s\n", ft_strdup("a"));
+	printf("%s\n",    strdup("a"));
+
+
+
+    // ****************  substr  *****************
+    printf("\n\n**************** substr *************\n");
+
+	printf("%s\n", ft_substr("Un message !", 3, 3));
+	printf("mes\n");
+
+    printf("%s\n", ft_substr("Un message !", 3, 20));
+	printf("message !\n");
+	
+    printf("%s\n", ft_substr("Un message !", 0, 12));
+	printf("Un message !\n");
+
+    printf("%s\n", ft_substr("Un message !", 0, 5));
+	printf("Un me\n");
+	
+    printf("%s\n", ft_substr("Un message !", 0, 20));
+	printf("Un message !\n");
+	
+    printf("%s\n", ft_substr("Un", 3, 2));
+	printf("(null)\n");
+	
+    printf("%s\n", ft_substr("Un", 2, 20));
+	printf("(null)\n");
+
+
+    // ****************  strjoin  *****************
+    printf("\n\n**************** strjoin *************\n");
+
+	printf("%s\n", ft_strjoin("Un message !", " Et un autre"));
+	printf(                   "Un message ! Et un autre\n");
+
+	printf("%s\n", ft_strjoin("", " Et un autre"));
+	printf(                   " Et un autre\n");
+
+    printf("%s\n", ft_strjoin("", ""));
+	printf(                   "\n");
+
+    printf("%s\n", ft_strjoin("Un message !", ""));
+	printf(                   "Un message !\n");
+
+
+
+    // ****************  strtrim  *****************
+    printf("\n\n**************** strtrim *************\n");
+
+    printf("%s\n", ft_strtrim("abcUn message !abc", "abc"));
+	printf(                   "Un message !\n");
+
+    printf("%s\n", ft_strtrim("abeUn mesabcsage !aec ", "abc"));
+	printf(                   "abeUn mesabcsage !aec \n");
+
+    printf("%s\n", ft_strtrim("abeUn message !abc ", "abc"));
+	printf(                   "abeUn message !abc \n");
+
+
+
+    // ****************  split  *****************
+    printf("\n\n**************** split *************\n");
+    char    **tab;
+    
+    tab = ft_split("         un grand message ici et       la et aussi là! fin        ", ' ');
+    i = -1;
+    while (tab[++i] != NULL)
+        printf("%s ", tab[i]);
+    printf("%s\n", tab[i]);
+    printf("un grand message ici et la et aussi là! fin (null)\n");
+
+    tab = ft_split("   a z e r        ", ' ');
+    i = -1;
+    while (tab[++i] != NULL)
+        printf("%s ", tab[i]);
+    printf("%s\n", tab[i]);
+    printf("a z e r (null)\n");
+
+    tab = ft_split("Hello World", ' ');
+    i = -1;
+    while (tab[++i] != NULL)
+        printf("%s ", tab[i]);
+    printf("%s\n", tab[i]);
+    printf("Hello World (null)\n");
+
+    tab = ft_split(" H ", ' ');
+    i = -1;
+    while (tab[++i] != NULL)
+        printf("%s ", tab[i]);
+    printf("%s\n", tab[i]);
+    printf("H (null)\n");
+
+    tab = ft_split("         ", ' ');
+    i = -1;
+    while (tab[++i] != NULL)
+        printf("%s ", tab[i]);
+    printf("%s\n", tab[i]);
+    printf("(null)\n");
+
+
+
+    // ****************  itoa  *****************
+    printf("\n\n**************** itoa *************\n");
+
+
+
+    // ****************  strmapi  *****************
+    printf("\n\n**************** strmapi *************\n");
+
+
+
+    // ****************  striteri  *****************
+    printf("\n\n**************** striteri *************\n");
+
+
+
+    // ****************   putchar_fd  *****************
+    printf("\n\n**************** putchar_fd  *************\n");
+
+
+
+    // ****************  putstr_fd  *****************
+    printf("\n\n**************** putstr_fd *************\n");
+
+
+
+    // ****************  putendl_fd  *****************
+    printf("\n\n**************** putendl_fd *************\n");
+
+
+
+    // ****************  putnbr_fd  *****************
+    printf("\n\n**************** putnbr_fd *************\n");
+
+
+
 
 
 
