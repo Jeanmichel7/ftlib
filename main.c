@@ -15,6 +15,9 @@
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 //memcmp a tester en cour
 #include "libbsd/src/strlcpy.c"
@@ -328,14 +331,14 @@ int	main(void)
     int *destination2 = data2 + decalage;
 
     i = 0;
-    printf("src :  ");
+    //printf("src :  ");
     while (i < 12)
     {
         //printf("src  : %d %p\n", *((int *)source2+ i), (int *)source2 + i);
-        printf("%d ", *((int *)source2+ i));
+        //printf("%d ", *((int *)source2+ i));
         i++;
     }
-    printf("\ndest : ");
+    //printf("\ndest : ");
     i = 0;
     while (i < 12)
     {
@@ -344,10 +347,10 @@ int	main(void)
            *((int *)destination2 + i) = i + decalage;
         }
         //printf("dest : %d %p\n", *((int *)destination2 + i), ((int *)destination2 + i));
-        printf("%d ", *((int *)destination2 + i));
+        //printf("%d ", *((int *)destination2 + i));
         i++;
     }
-    printf("\nretour mine :\n");
+    printf("\nretour mine : ");
     void *str_res2 = ft_memmove(destination2, source2, sizeof(int) * 5);
     i = 0;
     while (i < 12)
@@ -356,7 +359,6 @@ int	main(void)
         printf("%d ", *((int *)str_res2 + i));
         i++;
     }
-    printf("\n");
 
 
 
@@ -365,14 +367,14 @@ int	main(void)
     int *destination = data + decalage;
 
     i = 0;
-    printf("src :  ");
+    //printf("src :  ");
     while (i < 12)
     {
         //printf("src  : %d %p\n", *((int *)source+ i), (int *)source + i);
-        printf("%d ", *((int *)source+ i));
+        //printf("%d ", *((int *)source+ i));
         i++;
     }
-    printf("\ndest : ");
+    //printf("\ndest : ");
     i = 0;
     while (i < 12)
     {
@@ -381,14 +383,14 @@ int	main(void)
            *((int *)destination + i) = i + decalage;
         }
         //printf("dest : %d %p\n", *((int *)destination + i), ((int *)destination + i));
-        printf("%d ", *((int *)destination + i));
+        //printf("%d ", *((int *)destination + i));
         i++;
     }
     printf("\n");
     void *str_res;
     str_res = memmove(destination, source, sizeof(int) * 5);
     i = 0;
-    printf("retour real :\n");
+    printf("retour real : ");
     while (i < 12)
     {
         //printf("retour real  : %d %p\n", *((int *)str_res + i),  ((int *)str_res + i));
@@ -781,39 +783,149 @@ int	main(void)
     // ****************  itoa  *****************
     printf("\n\n**************** itoa *************\n");
 
+    printf("%s\n", ft_itoa(123));
+    printf("123\n");
+    printf("%s\n", ft_itoa(100));
+    printf("100\n");
+    printf("%s\n", ft_itoa(1000));
+    printf("1000\n");
+    printf("%s\n", ft_itoa(1));
+    printf("1\n");
+    printf("%s\n", ft_itoa(123456789));
+    printf("123456789\n");
+    printf("%s\n", ft_itoa(0));
+    printf("0\n");
+    printf("%s\n", ft_itoa(2147483647));
+    printf("2147483647\n\n");
+    
+
+    printf("%s\n", ft_itoa(-123));
+    printf("-123\n");
+    printf("%s\n", ft_itoa(-100));
+    printf("-100\n");
+    printf("%s\n", ft_itoa(-1000));
+    printf("-1000\n");
+    printf("%s\n", ft_itoa(-2));
+    printf("-2\n");
+    printf("%s\n", ft_itoa(-0));
+    printf("0\n");
+    printf("%s\n", ft_itoa(-123456789));
+    printf("-123456789\n");
+    printf("%s\n", ft_itoa(-2147483648));
+    printf("-2147483648\n");
 
 
     // ****************  strmapi  *****************
     printf("\n\n**************** strmapi *************\n");
+
+    char f(unsigned int n, char c)
+    {
+        if (c == ' ')
+            return ('_');
+    	return (c - 1);
+    }
+    printf("%s\n", ft_strmapi("Vo nfttbhf", f));
+    printf("Un_message\n");
+
+    printf("%s\n", ft_strmapi("abc def ghi", f));
+    printf("'ab_cde_fgh\n");
 
 
 
     // ****************  striteri  *****************
     printf("\n\n**************** striteri *************\n");
 
+    char    str_striteri[] = "Un message original";
+
+    char *fuck2(unsigned int i, char *s)
+    {
+    	 *(s + i) = *(s + i) + 1;
+    }
+    printf("%s\n", str_striteri);
+    //ft_striteri(str_striteri, fuck2(0, str_striteri));
+    printf("%s\n", str_striteri);
+
 
 
     // ****************   putchar_fd  *****************
-    printf("\n\n**************** putchar_fd  *************\n");
+    printf("\n\n**************** put****_fd  *************\n");
+    int fd;
+
+    fd = open("text.txt", O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
+    printf("FD : %d\n", fd);
+    if (fd == -1){
+        printf("impossible d'ouvrir le fichier \"test\"\n");
+        return (1);
+    }
+
+    ft_putchar_fd('b', fd);
+    ft_putchar_fd('o', fd);
+    ft_putchar_fd('n', fd);
+    ft_putchar_fd('j', fd);
+    ft_putchar_fd('o', fd);
+    ft_putchar_fd('u', fd);
+    ft_putchar_fd('r', fd);
+    ft_putchar_fd('\n', fd);
+
+
 
 
 
     // ****************  putstr_fd  *****************
-    printf("\n\n**************** putstr_fd *************\n");
 
+    ft_putstr_fd("Bonjour", fd);
+    ft_putchar_fd(' ', fd);
+    ft_putstr_fd("à", fd);
+    ft_putchar_fd(' ', fd);
+    ft_putstr_fd("tous", fd);
+    ft_putchar_fd(' ', fd);
+    ft_putchar_fd('\n', fd);
 
 
     // ****************  putendl_fd  *****************
-    printf("\n\n**************** putendl_fd *************\n");
+
+    ft_putendl_fd("test de putend", fd);
+    ft_putendl_fd("test de putend", fd);
 
 
 
     // ****************  putnbr_fd  *****************
-    printf("\n\n**************** putnbr_fd *************\n");
+
+    ft_putnbr_fd(123, fd);
+    ft_putchar_fd('\n', fd);
+    ft_putnbr_fd(123456, fd);
+    ft_putchar_fd('\n', fd);
+    ft_putnbr_fd(1000, fd);
+    ft_putchar_fd('\n', fd);
+    ft_putnbr_fd(1, fd);
+    ft_putchar_fd('\n', fd);
+    ft_putnbr_fd(0, fd);
+    ft_putchar_fd('\n', fd);
+
+    ft_putnbr_fd(-120, fd);
+    ft_putchar_fd('\n', fd);
+    ft_putnbr_fd(-2147483648, fd);
+    ft_putchar_fd('\n', fd);
+    ft_putnbr_fd(-10000, fd);
+    ft_putchar_fd('\n', fd);
+    ft_putnbr_fd(-0, fd);
+    ft_putchar_fd('\n', fd);
+
+    if (close(fd) == -1)
+    {
+        printf("impossible de fermer le fichier \"test\"\n");
+        return (1);
+    }
 
 
-
-
+    printf("\n\n**************** test fct_fd ******************\n\n");
+    printf("***********************************************\n");
+    printf("***********************************************\n");
+    printf("******                                   ******\n");
+    printf("******    diff text.txt text_test.txt    ******\n");
+    printf("******                                   ******\n");
+    printf("***********************************************\n");
+    printf("***********************************************\n");
 
 
 	return (0);

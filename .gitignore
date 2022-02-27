@@ -2,5 +2,6 @@ bin
 *.o
 *.swp
 .DS_Store
-libbsd
-.vscode
+text.txt
+libbsd/*
+.vscode/*

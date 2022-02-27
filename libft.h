@@ -14,6 +14,15 @@
 # define __LIBFT_H__
 
 #include <stdlib.h>
+#include <unistd.h>
+
+
+//char f(unsigned int n, char c);
+
+
+
+
+
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
