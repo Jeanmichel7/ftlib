@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-unsigned int	ft_count(const char *s, char c)
+static unsigned int	ft_count(const char *s, char c)
 {
 	unsigned int	count;
 	unsigned int	i;

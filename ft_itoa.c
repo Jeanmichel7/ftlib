@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-void	ft_reverse(char *s, int n)
+static void	ft_reverse(char *s, int n)
 {
 	char	*str_temp;
 	int 	i;

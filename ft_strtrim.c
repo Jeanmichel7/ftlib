@@ -12,9 +12,7 @@
 
 #include "libft.h"
 
-/* trim space ? */
-
-int	check_trim(const char *s1, unsigned int index, const char *set, unsigned int len)
+static int	check_trim(const char *s1, unsigned int index, const char *set, unsigned int len)
 {
 	unsigned int	i;
 	i = 0;

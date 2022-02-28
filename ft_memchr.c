@@ -20,9 +20,7 @@ void	*ft_memchr(const void *s, int n, size_t size)
 	while (i < size)
 	{
 		if (*((char *)s + i) == n)
-		{
 			return ((char *)s + i);
-		}
 		i++;
 	}
 	return (0);

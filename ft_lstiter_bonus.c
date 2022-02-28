@@ -1,48 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrasser <jrasser@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/25 21:02:02 by jrasser           #+#    #+#             */
-/*   Updated: 2022/02/25 21:02:02 by jrasser          ###   ########.fr       */
+/*   Created: 2022/02/27 03:30:37 by jrasser           #+#    #+#             */
+/*   Updated: 2022/02/27 03:30:37 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_pow(int n)
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	unsigned int i;
-
-	i = 1;
-	while (n /= 10)
-		i *= 10;
-	return (i);
-}
-
-void	ft_putnbr_fd(int n, int fd)
-{
-	unsigned int	len;
-	char			c;
-
-	len = ft_pow(n);
-	if (n == -2147483648)
-		write(fd, "-2147483648", 11);
-	else
+	while (lst)
 	{
-		if (n < 0)
-		{
-			write (fd, "-", 1);
-			n *= -1;
-		}
-		while (len)
-		{
-			c = (n / len) + '0';
-			write(fd, &c, 1);
-			n %= len;
-			len /= 10;
-		}
+		f(lst);
+		lst = lst->next;
 	}
 }
+/*
+#include "libft.h"
+#include <stdio.h>
+
+void	ft_lstiter(t_list *lst, void (*f)(void *))
+{
+	printf("%p, %s\n", lst, (char *)lst->content);
+	while (lst)
+	{
+		f(lst);
+		lst = lst->next;
+	}
+}
+*/
