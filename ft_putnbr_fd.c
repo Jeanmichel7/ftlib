@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 21:02:02 by jrasser           #+#    #+#             */
-/*   Updated: 2022/02/25 21:02:02 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/03/02 01:40:50 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 static int	ft_pow(int n)
 {
-	unsigned int i;
+	unsigned int	i;
 
 	i = 1;
-	while (n /= 10)
+	while (n / 10)
+	{
+		n /= 10;
 		i *= 10;
+	}
 	return (i);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 03:30:01 by jrasser           #+#    #+#             */
-/*   Updated: 2022/02/27 03:30:01 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/02/28 21:28:06 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
-	del(lst);
-	free(&lst->content);
+	del(lst->content);
+	free(lst);
 }
 /*
 #include <stdio.h>

@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 21:00:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/02/25 21:00:45 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/03/02 01:04:55 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 static void	ft_reverse(char *s, int n)
 {
 	char	*str_temp;
-	int 	i;
+	int		i;
 	int		len;
 
 	len = ft_strlen(s);
 	str_temp = malloc(sizeof(char) * (len + 1));
 	i = -1;
-	while (i < n){
+	while (i < n)
+	{
 		str_temp[i] = s[i];
 		i++;
 	}
@@ -58,5 +59,3 @@ char	*ft_itoa(int n)
 	ft_reverse(str, i);
 	return (str);
 }
-
-

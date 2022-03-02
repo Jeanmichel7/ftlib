@@ -6,15 +6,15 @@
 /*   By: jrasser <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:46:14 by jrasser           #+#    #+#             */
-/*   Updated: 2022/02/22 21:20:17 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/03/02 00:58:51 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-typedef unsigned long size_t;
+#include "libft.h"
 
-void    ft_bzero(void *s, size_t n)
+void	ft_bzero(void *s, size_t n)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	if (n > 0)

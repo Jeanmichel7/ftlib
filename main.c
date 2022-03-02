@@ -6,7 +6,7 @@
 /*   By: jrasser <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 14:33:55 by jrasser           #+#    #+#             */
-/*   Updated: 2022/02/24 23:10:06 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/03/01 22:49:59 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,110 @@
 #include <fcntl.h>
 
 //memcmp a tester en cour
-#include "libbsd/src/strlcpy.c"
-#include "libbsd/src/strlcat.c"
-#include "libbsd/src/strnstr.c"
+//#include "libbsd/src/strlcpy.c"
+//#include "libbsd/src/strlcat.c"
+//#include "libbsd/src/strnstr.c"
+
+char f(unsigned int n, char c)
+{
+	if (c == ' ')
+		return ('_');
+	return (c - 1);
+}
+
+void fct_striteri(unsigned int i, char *s)
+{
+	*(s + i) = *(s + i) - 1;
+}
+
+void fct_striteri2(unsigned int i, char *s)
+{
+	if (s[i] >= 'a' && s[i] <= 'z')
+		*(s + i) = *(s + i) - 32;
+}
+
+void print_list(t_list *list)
+{
+	int i = 0;
+		while (list)
+	{
+		//printf("%s\n", list->content);
+		printf("block : %d, adress %p, next : %p, content : %s\n", i, list, list-> next, list-> content);
+		list = list->next;
+		i++;
+	}
+	printf("\n");
+}
+
+// fct del content
+void del_content(void *elem)
+{
+	char		*tmp;
+	int			i;
+
+	i = 0;
+	tmp = elem;
+	//printf("element avt : %p, content : %s\n",elem, (char *)elem);
+	//printf("tmp     avt : %p, content : %s\n", tmp, tmp);
+
+	while (*(tmp + i))
+	{
+		*(tmp + i) = 0;
+		i++;
+	}
+}
+
+// fct del list
+void del_liste(void *elem)
+{
+	char	*tmp;
+	int		i;
+
+	tmp = elem;
+	//printf("avant sup : %p, content : %s\n", tmp, tmp);
+	i = 0;	
+	while (*(tmp + i))
+	{
+		*(tmp + i) = 0;
+		i++;
+	}
+	//printf("apres sup : %p, content : %s\n\n", tmp, tmp);
+}
+
+// fonction a appliquer
+void fct_lstiter(void *elem)
+{
+	t_list		*tmp;
+	tmp = elem;
+	//printf("avant modif : %p, content : %s\n", tmp, tmp->content);
+	if (tmp->content == NULL)
+		tmp->content = "Hello world";
+	else
+		tmp->content = "blablablou";
+	//printf("apres modif : %p, content : %s\n", tmp, tmp->content);
+}
+
+void	*fct_lstmap(void *elem)
+{
+	char	*str;
+	t_list	*temp;
+
+	temp = elem;
+	temp->content = "Hello";
+	printf("temp : %p %p %s\n", temp, temp->next, temp->content);
+	return (0);
+}
+
+void fct_del_lstmap(void *elem)
+{
+	t_list		*tmp;
+	tmp = elem;
+		//printf("avant sup : %p, content : \n", tmp);
+	//tmp->content = NULL;
+	//printf("apres sup : %p, content : %s\n\n", tmp, tmp->content);
+}
+
+
 
 
 int	main(void)
@@ -612,6 +713,9 @@ int	main(void)
 	printf("%s\n", ft_strnstr( "", "a", len));
 	printf("%s\n",    strnstr( "", "a", len));
 
+	printf("%s\n", ft_strnstr( "A", "A", 1));
+	printf("%s\n",    strnstr( "A", "A", 1));
+
 	printf("%s\n", ft_strnstr(str_strnstr_big, str_strnstr_little, 1023));
 	printf("%s\n",    strnstr(str_strnstr_big, str_strnstr_little, 1023));
 
@@ -629,11 +733,17 @@ int	main(void)
 	printf("%d\n", ft_atoi("-001  "));
 	printf("%d\n",    atoi("-001  "));
 
-	printf("%d\n", ft_atoi("   -2147483648"));
-	printf("%d\n",    atoi("   -2147483648"));
+	printf("%d\n", ft_atoi("  	 -2147483648"));
+	printf("%d\n",    atoi("  	 -2147483648"));
+
+	printf("%d\n", ft_atoi("  	 -92147483648"));
+	printf("%d\n",    atoi("  	 -92147483648"));
 
 	printf("%d\n", ft_atoi("2147483647"));
 	printf("%d\n",    atoi("2147483647"));
+
+	printf("%d\n", ft_atoi("-99999999999999999999999999999999999999992147483647"));
+	printf("%d\n",    atoi("-99999999999999999999999999999999999999992147483647"));
 
 	printf("%d\n", ft_atoi("-abc123"));
 	printf("%d\n",    atoi("-abc123"));
@@ -641,28 +751,33 @@ int	main(void)
 	printf("%d\n", ft_atoi("-0"));
 	printf("%d\n",    atoi("-0"));
 
+	printf("%d\n", ft_atoi("  	 12292147483648"));
+	printf("%d\n",    atoi("  	 12292147483648"));
+
+	printf("%d\n", ft_atoi("  	 922337203685477587"));
+	printf("%d\n",    atoi("  	 922337203685477587"));
 
 
 	// ****************  calloc  *****************
 	printf("\n\n**************** calloc *************\n");
 
-	int len_calloc = 10;
-	char	*str_calloc      = ft_calloc(len_calloc, sizeof(char));
-	char	*str_calloc_real =    calloc(len_calloc, sizeof(char));
-	printf("%d\n", ft_strlen(str_calloc));
-	printf("%d\n", ft_strlen(str_calloc_real));
+	int len_calloc = 0;
+	void	*str_calloc      = ft_calloc(len_calloc, sizeof(char));
+	void	*str_calloc_real =    calloc(len_calloc, sizeof(char));
+	printf("%zu\n", ft_strlen(str_calloc));
+	printf("%zu\n", ft_strlen(str_calloc_real));
 
 	i = 0;
 	while (i < len_calloc)
 	{
-		printf("%d", *(str_calloc_real + i));
+		//printf("%d", *(str_calloc_real + i));
 		i++;
 	}
 	printf("\n");
 	i = 0;
 	while (i < len_calloc)
 	{
-		printf("%d", *(str_calloc_real + i));
+		//printf("%d", *(str_calloc_real + i));
 		i++;
 	}
 	printf("\n");
@@ -701,9 +816,12 @@ int	main(void)
 	printf("%s\n", ft_substr("Un message !", 0, 20));
 	printf("Un message !\n");
 	
-	printf("%s\n", ft_substr("Un", 3, 2));
+	printf("%s\n", ft_substr("Un", 13, 2));
 	printf("(null)\n");
 	
+	printf("%s\n", ft_substr("Un", 2, 20));
+	printf("(null)\n");
+
 	printf("%s\n", ft_substr("Un", 2, 20));
 	printf("(null)\n");
 
@@ -731,11 +849,17 @@ int	main(void)
 	printf("%s\n", ft_strtrim("abcUn message !abc", "abc"));
 	printf(                   "Un message !\n");
 
-	printf("%s\n", ft_strtrim("abeUn mesabcsage !aec ", "abc"));
-	printf(                   "abeUn mesabcsage !aec \n");
+	printf("%s\n", ft_strtrim("abeUn mesabcsage !aec", "abc"));
+	printf(                   "eUn mesabcsage !ae\n");
 
-	printf("%s\n", ft_strtrim("abeUn message !abc ", "abc"));
-	printf(                   "abeUn message !abc \n");
+	printf("%s\n", ft_strtrim("abeUn message !ac", "abc"));
+	printf(                   "eUn message !\n");
+
+	printf("%s\n", ft_strtrim("Un message 			!", "	 "));
+	printf(                   "Unmessage!\n");
+
+	printf("%s\n", ft_strtrim("                     ", " "));
+	printf(                   "(vide)");
 
 
 
@@ -818,12 +942,7 @@ int	main(void)
 	// ****************  strmapi  *****************
 	printf("\n\n**************** strmapi *************\n");
 
-	char f(unsigned int n, char c)
-	{
-		if (c == ' ')
-			return ('_');
-		return (c - 1);
-	}
+
 	printf("%s\n", ft_strmapi("Vo nfttbhf", &f));
 	printf("Un_message\n");
 
@@ -841,15 +960,7 @@ int	main(void)
 	char    str_striteri[] = "Vo!nfttbhf!psjhjobm";
 	char    str_striteri2[] = "un message original!";
 	char    str_striteri3[] = "";
-	void fct_striteri(unsigned int i, char *s)
-	{
-		*(s + i) = *(s + i) - 1;
-	}
-	void fct_striteri2(unsigned int i, char *s)
-	{
-		if (s[i] >= 'a' && s[i] <= 'z')
-			*(s + i) = *(s + i) - 32;
-	}
+
 
 	ft_striteri(str_striteri, &fct_striteri);
 	printf("%s\n", str_striteri);
@@ -973,19 +1084,7 @@ int	main(void)
 	printf("*******************  BONUS  *****************\n");
 	printf("*********************************************\n");
 
-	void print_list(t_list *list)
-	{
-		int i = 0;
 
-		while (list)
-		{
-			//printf("%s\n", list->content);
-			printf("block : %d, adress %p, next : %p, content : %s\n", i, list, list-> next, list-> content);
-			list = list->next;
-			i++;
-		}
-		printf("\n");
-	}
 
 
 	printf("\n\n**************** lstnew  *************\n");
@@ -1001,7 +1100,8 @@ int	main(void)
 	tmp = malloc(sizeof(t_list));
 	if (tmp == NULL)
 		return (1);
-	tmp->content = "new_content";
+	char	str_1[] = "new content";
+	tmp->content = str_1;
 	tmp->next = liste;
 
 	ft_lstadd_front(&liste, tmp);
@@ -1011,7 +1111,8 @@ int	main(void)
 	tmp2 = malloc(sizeof(t_list));
 	if (tmp2 == NULL)
 		return (1);
-	tmp2->content = "other_new_content";
+	char	str_2[] = "other new content";
+	tmp2->content = str_2;
 	tmp2->next = liste;
 
 	ft_lstadd_front(&liste, tmp2);
@@ -1033,7 +1134,8 @@ int	main(void)
 	tmp3 = malloc(sizeof(t_list));
 	if (tmp3 == NULL)
 		return (1);
-	tmp3->content = "en dernier";
+	char	str_3[] = "en dernier";
+	tmp3->content = str_3;
 	tmp3->next = NULL;
 
 	ft_lstadd_back(&liste, tmp3);
@@ -1044,7 +1146,8 @@ int	main(void)
 	tmp4 = malloc(sizeof(t_list));
 	if (tmp4 == NULL)
 		return (1);
-	tmp4->content = "encore plus dernier";
+	char	str_4[] = "encore plus dernier";
+	tmp4->content = str_4;
 	tmp4->next = NULL;
 
 	ft_lstadd_back(&liste, tmp4);
@@ -1061,15 +1164,12 @@ int	main(void)
 	tmp5 = malloc(sizeof(t_list));
 	if (tmp5 == NULL)
 		return (1);
-	tmp5->content = "contenu a supprimer";
+	char	str_5[] = "fin de la chaine";
+	tmp5->content = str_5;
 	tmp5->next = NULL;
 	ft_lstadd_back(&liste, tmp5);
 
-	// pointeur sur dernier élement a supprimer
-	t_list	*element_to_del;
-	element_to_del = ft_lstlast(liste);
-	printf("dernier elem : %s\n", element_to_del->content);
-
+	
 	// pointeur sur 3eme élement a supprimer
 	t_list *elem_3_to_del;
 	t_list *temporaire;
@@ -1083,45 +1183,45 @@ int	main(void)
 	liste = temporaire;
 	printf("elem 3: %s\n", elem_3_to_del->content);
 
-
-	// fct del content
-	void del_content(void *elem)
-	{
-		t_list		*tmp;
-		tmp = elem;
-
-		printf("avant sup : %p, content : %s\n", tmp, tmp->content);
-		tmp->content = NULL;
-		printf("apres sup : %p, content : %s\n\n", tmp, tmp->content);
-		elem = tmp;
-	}
 	print_list(liste);
 	ft_lstdelone(elem_3_to_del, &del_content);
 	print_list(liste);
-	ft_lstdelone(element_to_del, &del_content);
-	print_list(liste);
+
+	
+	// pointeur sur dernier élement a supprimer
+	t_list	*element_to_del;
+	element_to_del = ft_lstlast(liste);
+	printf("dernier elem : %s\n", element_to_del->content);
+
+	//ft_lstdelone(element_to_del, &del_content);
+	//print_list(liste);
+	
 
 
 
-
-
+/*
 
 	// ajout un nouvelle élement
 	t_list	*tmp6;
 	tmp6 = malloc(sizeof(t_list));
 	if (tmp6 == NULL)
 		return (1);
-	tmp6->content = "ajout de text";
+	char	str_6[] = "ajout de text";
+	tmp6->content = str_6;
 	tmp6->next = NULL;
 	ft_lstadd_back(&liste, tmp6);
 
+	print_list(liste);
+*/
+/*
 
 	// ajout un nouvelle élement
 	t_list	*tmp7;
 	tmp7 = malloc(sizeof(t_list));
 	if (tmp7 == NULL)
 		return (1);
-	tmp7->content = "parce que c'est vide";
+	char	str_7[] = "parce que cest vide";
+	tmp7->content = str_7;
 	tmp7->next = NULL;
 	ft_lstadd_back(&liste, tmp7);
 
@@ -1131,40 +1231,26 @@ int	main(void)
 	tmp8 = malloc(sizeof(t_list));
 	if (tmp8 == NULL)
 		return (1);
-	tmp8->content = "et mtn plus rempli !";
+	char	str_8[] = "et mtn plus rempli !";
+	tmp8->content = str_8;
 	tmp8->next = NULL;
 	ft_lstadd_back(&liste, tmp8);
-	
+
+*/	
 	print_list(liste);
 
 
-
+/*
 
 
 	printf("\n\n**************** lstclear *************\n");
-
-	// fct del list
-	void del_liste(void *elem)
-	{
-		t_list		*tmp;
-
-		tmp = elem;
-		printf("avant sup : %p, content : %s\n", tmp, tmp->content);
-		tmp->content = NULL;
-		tmp->next = NULL;
-
-		printf("apres sup : %p, content : %s\n\n", tmp, tmp->content);
-		elem = tmp;
-	}
 
 	print_list(liste);
 	printf("elem de depart : %s\n", tmp6->content);
 	ft_lstclear(&tmp6, &del_liste);
 	print_list(liste);
-	
-
-
-
+*/	
+/*
 	printf("\n\n**************** lstiter *************\n");
 
 	// pointeur sur 4eme élement
@@ -1180,19 +1266,6 @@ int	main(void)
 	print_list(liste);
 	printf("elem 4 de départ :%p, %s \n", elem_4, elem_4->content);
 
-	// fonction a appliquer
-	void fct_lstiter(void *elem)
-	{
-		t_list		*tmp;
-
-		tmp = elem;
-		//printf("avant modif : %p, content : %s\n", tmp, tmp->content);
-		if (tmp->content == NULL)
-			tmp->content = "Hello world";
-		else
-			tmp->content = "blablablou";
-		//printf("apres modif : %p, content : %s\n", tmp, tmp->content);
-	}
 	ft_lstiter(elem_4, &fct_lstiter);
 	print_list(liste);
 
@@ -1201,31 +1274,7 @@ int	main(void)
 
 	printf("\n\n**************** lstmap *************\n");
 
-	void	*fct_lstmap(void *elem)
-	{
-		char	*str;
-		t_list	*temp;
-//
-		temp = elem;
-		temp->content = "Hello";
-		printf("temp : %p %p %s\n", temp, temp->next, temp->content);
-//
-//
-
-
-		return (0);
-	}
-
-	void fct_del_lstmap(void *elem)
-	{
-		t_list		*tmp;
-		tmp = elem;
-
-		//printf("avant sup : %p, content : \n", tmp);
-		//tmp->content = NULL;
-		//printf("apres sup : %p, content : %s\n\n", tmp, tmp->content);
-	}
-
+	
 	t_list	*new_list;
 
 	new_list = ft_lstmap(liste, &fct_lstmap, &fct_del_lstmap);
@@ -1234,7 +1283,7 @@ int	main(void)
 	print_list(liste);
 	printf("\n\nnouvelle liste \n");
 	print_list(new_list);
-
+*/
 
 	return (0);
 }
