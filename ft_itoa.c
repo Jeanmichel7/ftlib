@@ -6,56 +6,52 @@
 /*   By: jrasser <jrasser@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 21:00:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/03/02 01:04:55 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/03/04 18:11:02 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void	ft_reverse(char *s, int n)
+unsigned int	ft_itoa_len(int n)
 {
-	char	*str_temp;
-	int		i;
-	int		len;
+	unsigned int	len;
 
-	len = ft_strlen(s);
-	str_temp = malloc(sizeof(char) * (len + 1));
-	i = -1;
-	while (i < n)
+	if (n == 0)
+		return (1);
+	len = 0;
+	while (n)
 	{
-		str_temp[i] = s[i];
-		i++;
+		len++;
+		n /= 10;
 	}
-	str_temp[i] = '\0';
-	i = -1;
-	while (str_temp[++i])
-		s[i] = str_temp[len - i - 1];
-	s[i] = '\0';
+	return (len);
 }
 
 char	*ft_itoa(int n)
 {
-	char	*str;
-	int		i;
-	int		sign;
+	char			*str;
+	unsigned int	i;
+	unsigned int	sign;
 
-	sign = 1;
+	sign = 0;
 	if (n < 0)
-		sign = -1;
-	str = malloc(sizeof(char) * 13);
+		sign = 1;
+	str = malloc(sizeof(char) * (ft_itoa_len(n) + 1 + sign));
 	if (str == NULL)
 		return (NULL);
-	i = 0;
-	while (n / 10)
+	str[ft_itoa_len(n) + sign] = '\0';
+	i = ft_itoa_len(n) + sign - 1;
+	if (n == 0)
+		str[i--] = '0';
+	while (n)
 	{
-		str[i] = ((n % 10) * sign) + '0';
+		if (sign)
+			str[i--] = ((n % 10) * -1) + '0';
+		else
+			str[i--] = (n % 10) + '0';
 		n /= 10;
-		i++;
 	}
-	str[i++] = (n * sign) + '0';
-	if (sign == -1)
-		str[i++] = '-';
-	str[i] = '\0';
-	ft_reverse(str, i);
+	if (sign)
+		str[i] = '-';
 	return (str);
 }

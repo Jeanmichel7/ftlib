@@ -6,11 +6,12 @@
 /*   By: jrasser <jrasser@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 21:00:34 by jrasser           #+#    #+#             */
-/*   Updated: 2022/03/02 02:01:29 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/03/04 16:13:29 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
 static unsigned int	ft_count(const char *s, char c)
 {
@@ -34,14 +35,31 @@ static unsigned int	ft_count(const char *s, char c)
 	return (count);
 }
 
+char	*ft_sub_split(char const *s, char c, unsigned int *j)
+{
+	char			*str;
+	unsigned int	k;
+
+	str = malloc(sizeof(char) * (ft_strlen(s) + 1));
+	if (str == NULL)
+		return (NULL);
+	k = 0;
+	while (s[*j] == c && s[*j])
+		(*j)++;
+	while (s[*j] != c && s[*j])
+		str[k++] = s[(*j)++];
+	str[k] = '\0';
+	return (str);
+}
+
 char	**ft_split(char const *s, char c)
 {
 	char			**tab;
-	char			*str;
 	unsigned int	i;
 	unsigned int	j;
-	unsigned int	k;
 
+	if (!s)
+		return (NULL);
 	tab = malloc(sizeof(char *) * (ft_count(s, c) + 1));
 	if (tab == NULL)
 		return (NULL);
@@ -49,17 +67,8 @@ char	**ft_split(char const *s, char c)
 	j = 0;
 	while (i < ft_count(s, c))
 	{
-		str = malloc(sizeof(char) * (ft_strlen(s) + 1));
-		if (str == NULL)
-			return (NULL);
-		k = 0;
-		while (s[j] == c && s[j])
-			j++;
-		while (s[j] != c && s[j])
-			str[k++] = s[j++];
-		str[k] = '\0';
-		tab[i++] = str;
-	}
+		tab[i++] = ft_sub_split(s, c, &j);
+	}	
 	tab[i] = NULL;
 	return (tab);
 }
